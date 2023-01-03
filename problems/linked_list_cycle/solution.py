@@ -14,5 +14,5 @@ class Solution:
             else:
                 storage.append(current)
             current = current.next
-        return False 
+        return False
             
