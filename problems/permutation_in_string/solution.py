@@ -16,10 +16,7 @@ class Solution:
 
         # permute(s1)
 
-        # for string_ in string_list:
-        #     if string_ in s2:
-        #         return True
-        # return False
+
 
 
         s1_dict = collections.Counter(s1)
