@@ -1,15 +1,19 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        l = []
+        
+        stack = []
+        parentheses_dict = { "}" : "{", ")" : "(", "]" : "["}
 
-        dict_parentheses = {'}':'{', ')':'(', ']':'['}        
-        for bracket in s:
-            if bracket in dict_parentheses.values():
-                l.append(bracket)
+        for c in s:
+            if c not in parentheses_dict:
+                stack.append(c)
             else:
-                if len(l) > 0 and l[-1] == dict_parentheses[bracket]:
-                        l.pop()
+                if stack and stack[-1] == parentheses_dict[c]:
+                    stack.pop()
                 else:
                     return False
+                
 
-        return len(l) == 0
+        return len(stack) == 0
+
+
