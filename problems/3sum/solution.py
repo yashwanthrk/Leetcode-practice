@@ -1,38 +1,47 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-
+        nums.sort()
 
         triplets_list = []
 
-        def two_pointer_sum(current_value, low_ptr, high_ptr):
 
-            while low_ptr < high_ptr:
-                three_sum = current_value + nums[low_ptr] + nums[high_ptr]
-                if three_sum > 0:
-                    high_ptr -= 1
-                elif three_sum < 0:
-                    low_ptr  +=  1
+        for left in range(len(nums) - 2):
+
+             # this step makes sure that we do not have any duplicates in our 
+            #  result output
+            if left > 0 and nums[left] == nums[left - 1]:
+                continue
+
+            mid = left + 1
+            right = len(nums) - 1
+            while mid < right:
+                total = nums[left] + nums[mid] + nums[right]
+
+
+                if total > 0:
+                    right -= 1
+
+                elif total < 0:
+                    mid += 1
+
+
                 else:
-                    triplets_list.append([current_value, nums[low_ptr], nums
-[high_ptr]])
-                    low_ptr += 1
-                    while nums[low_ptr] == nums[low_ptr - 1] and low_ptr < high_ptr:
-                        low_ptr += 1
+                    triplets_list.append([nums[left], nums[mid], nums[right]])
 
-            return
 
-        nums = sorted(nums)
+                    # Another conditional for not calculating duplicates
 
-        for i in range(len(nums) - 2):            
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue 
+                    
+                    while mid < right and nums[mid] == nums[mid + 1]:
+                        mid += 1
 
-            two_pointer_sum(nums[i], i+1, len(nums) -1)
-            
+
+                    while mid < right and nums[right] == nums[right - 1]:
+                        right -= 1
+
+                    mid += 1
+                    right -= 1
+
         return triplets_list
+                        
 
-
-
-
-
-        
