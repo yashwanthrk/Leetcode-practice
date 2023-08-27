@@ -6,28 +6,24 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        total_paths = []
 
-        total_list = []
-
-        def dfs(node, current_sum, current_list):
+        def dfs(node, current_sum, path):
             if not node:
                 return
             
-            current_list.append(node.val)
             current_sum += node.val
+            path.append(node.val)
 
             if not node.left and not node.right:
                 if current_sum == targetSum:
-                    # list is mutuable, be careful
-                    total_list.append(list(current_list))  # Append a copy of current_list
+                    total_paths.append(path[:])  # Make a copy of the path
+                    
+            else:
+                dfs(node.left, current_sum, path)
+                dfs(node.right, current_sum, path)
 
-                # important step - pop the last element, when either of the leaf nodes are reached
-                current_list.pop()  # Remove the last element from current_list
-                return
-            
-            dfs(node.left, current_sum, current_list)
-            dfs(node.right, current_sum, current_list)
-            current_list.pop()  # Remove the last element from current_list after exploring both left and right
-
+            path.pop()  # Remove the last element from path before backtracking
+        
         dfs(root, 0, [])
-        return total_list
+        return total_paths
