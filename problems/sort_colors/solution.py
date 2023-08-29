@@ -3,37 +3,29 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        # color_dict = {}
-        # for num in nums:
-        #     color_dict[num] = color_dict.get(num, 0) + 1
         
-        # for key, value in color_dict.items():
-        #     for j in range(value):
-        #         nums.append(key)
-        #         nums.pop(0)
+        p0, curr, p2 = 0, 0, len(nums) - 1
 
 
-        # i = 0 
-        # j = len(nums) - 1
+        while curr <= p2:
+            print(nums)
 
-        # while i <= j:
-        #     if nums[i] >= nums[j]:
-        #         nums[i], nums[i+1] = nums[i+1], nums[i]
-        #         i += 1
-        #     else:
+            # curr traverses the entire array. If it finds a 0, it swaps it with the number at p0 and moves both pointers (curr and p0) forward. 
 
-        for i in range(0, len(nums)):
-            for j in range(i+1, len(nums)):
-                if nums[i] > nums[j]:
-                    nums[i], nums[j] = nums[j], nums[i]
-            
+            if nums[curr] == 0:
+                nums[p0], nums[curr] = nums[curr], nums[p0]
+                p0 += 1
+                curr += 1
+                    
+                # If it finds a 2, it swaps it with the number at p2 and only moves p2 backward (since the number swapped to curr could be a 0, 1, or 2 and needs to be checked again). If curr finds a 1, it just moves forward.
 
-        
-                
+            elif nums[curr] == 2:
 
+                nums[curr], nums[p2] = nums[p2], nums[curr]
+                p2 -= 1
 
-
+                # dont decrment curr here
 
 
-        
-        
+            else:
+                curr += 1
