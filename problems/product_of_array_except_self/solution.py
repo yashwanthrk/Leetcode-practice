@@ -1,40 +1,24 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         
+       
+        length = len(nums)
         
-        # def calculate_sum(arr, sum):
-        #     for num in arr:
-        #         sum *= num
-        #     return sum 
-        # new_nums = [1] * len(nums)
+        # Arrays to store left and right products
+        L, R, answer = [0]*length, [0]*length, [0]*length
 
-        # for i in range(len(nums)):
-        #     new_nums[i] = calculate_sum(nums[0:i], 1) * calculate_sum(nums[i+1:], 1)
+        # L[i] contains the product of all the elements to the left of i
+        L[0] = 1
+        for i in range(1, length):
+            L[i] = nums[i - 1] * L[i - 1]
 
-        # return new_nums
+        # R[i] contains the product of all the elements to the right of i
+        R[length - 1] = 1
+        for i in range(length - 2, -1, -1):
+            R[i] = nums[i + 1] * R[i + 1]
 
-        prefix_num =  [1] * len(nums)
-        postfix_num  = [1] * len(nums)
-        nums_3  = [1] * len(nums)
+        # Constructing the answer array
+        for i in range(length):
+            answer[i] = L[i] * R[i]
 
-
-
-        prefix_num[0] = nums[0]
-        postfix_num[-1] = nums[-1]
-
-        for index in range(1, len(nums)):
-            prefix_num[index] = prefix_num[index - 1] * nums[index]
-
-        for index in range(len(nums) - 2, -1 , -1):
-            postfix_num[index] = postfix_num[index + 1] * nums[index]
-         
-        # print(prefix_num, postfix_num)
-        nums_3[0] =  postfix_num[1]
-        nums_3[-1] = prefix_num[-2] 
-
-        for i in range(1, len(nums) - 1):
-            nums_3[i] = prefix_num[i - 1] * postfix_num[i+1]
-
-        # print(nums_3)
-        return nums_3
-
+        return answer
