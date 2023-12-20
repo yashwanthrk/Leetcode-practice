@@ -1,21 +1,16 @@
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-
-    # "Find 2 numbers in the array that are equal and are at most k apart from each other."?
-
         
-        hash_table = {}
+        from collections import defaultdict
+
+        groups = defaultdict(list)
+
         for index, num in enumerate(nums):
-            if num in hash_table:
-                old_index = hash_table[num]
-                # print(hash_table)
-                if abs(index - old_index) <= k:
+            groups[num].append(index)
+        
+        for index_list in groups.values():
+            for index in range(1, len(index_list)):
+                if abs(index_list[index] - index_list[index - 1]) <= k:
                     return True
-                else:
-                    hash_table[num] = index
-            else:
-                hash_table[num] = index
-
-
         
         return False
