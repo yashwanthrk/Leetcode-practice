@@ -1,15 +1,17 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        ransomNoteDict = {}
-        
+
+
+        hash_map = {}
+
         for ch in ransomNote:
-            ransomNoteDict[ch] = ransomNoteDict.get(ch, 0) + 1
-
+            if ch in hash_map:
+                hash_map[ch] += 1 
+            else:
+                hash_map[ch] = 1
+        
         for ch in magazine:
-            if ch in ransomNoteDict and ransomNoteDict[ch] > 0:
-                ransomNoteDict[ch] -= 1
-
-        if sum(ransomNoteDict.values()) <= 0:
-                return True
-
-        return False
+            if ch in hash_map and hash_map[ch] != 0:
+                hash_map[ch] -= 1
+        print(hash_map)
+        return sum(hash_map.values()) == 0
