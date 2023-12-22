@@ -3,41 +3,21 @@ class Solution:
         """
         Do not return anything, modify matrix in-place instead.
         """
-    
-        #transpose 
+
+          # Find the transpose of the matrix
+        # Reverse the rows of the matrix
+
+       #transpose 
         for row in range(len(matrix)):
-            for col in range(row,len(matrix)):
-                # print(row, col)
+            for col in range(row, len(matrix[0])):
                 # visualize it with diagram - it will be easy
 
                 temp = matrix[row][col]
                 matrix[row][col] = matrix[col][row]
                 matrix[col][row] = temp
-
+       
+        print(matrix)
+       
         #reverse
         for row in matrix:
             row.reverse()
-
-       
-       
-       
-        # output  = [[0 for _ in (row)] for row in (matrix)]
-        # # transpose matrix
-        # # iterate through rows
-        # for i in range(len(matrix)):
-        # # iterate through columns
-        #     for j in range(len(matrix[0])):
-        #         output[j][i] = matrix[i][j]
-        
-        # # print(output)
-
-
-        # for row in output:
-        #     row.reverse()
-        # print(output)
-
-        # matrix =  output
-
-
-   
- 
