@@ -3,50 +3,29 @@ class Solution:
         """
         Do not return anything, modify matrix in-place instead.
         """
-        
-        m = len(matrix)
-        n = len(matrix[0])
 
-        zeroes_row = [False] * m
-        zeroes_col = [False] * n
-        for row in range(m):
-            for col in range(n):
-                if matrix[row][col] == 0:
-                    zeroes_row[row] = True
-                    zeroes_col[col] = True
+        rows = len(matrix)
+        cols = len(matrix[0])
 
-        for row in range(m):
-            for col in range(n):
-                if zeroes_row[row] or zeroes_col[col]:
-                    matrix[row][col] = 0
+        def set_matrix_zeroes(r_, c_):
+            for r in range(rows):
+                for c in range(cols):
+                    if r == r_ and matrix[r][c] != 0:
+                        matrix[r][c] = 'X' 
+                    if c == c_ and matrix[r][c] != 0:
+                        matrix[r][c] = 'X' 
+
+
+        for r in range(rows):
+            for c in range(cols):
+                if matrix[r][c] == 0:
+                    set_matrix_zeroes(r, c)
+                else:
+                    continue
     
-    
-        
-        # # output  = [[0 for _ in (row)] for row in (matrix)]
-        
-        # # for i in range(len(matrix)):
-        # #     for j in range(len(matrix[i])):
-        # #         output[i][j] = matrix[i][j]
+        for r in range(rows):
+            for c in range(cols):
+                if matrix[r][c] == 'X':
+                    matrix[r][c] = 0
 
-        # # matrix copy
-        # output = [row[:] for row in matrix]
-
-        # def set_row_column_zeroes(i, j):   
-        #     for row in range(len(matrix[i])):
-        #         output[i][row] = 0
-        
-        #     for row in range(len(matrix)):
-        #         output[row][j] = 0
-
-        # for i in range(len(matrix)):
-        #     for j in range(len(matrix[i])):
-        #         if matrix[i][j] != 0:
-        #             continue
-
-        #         # make all row and colums zeros
-        #         set_row_column_zeroes(i, j)
-                
-        
-        # matrix = [row[:] for row in output]
-
-        # print(output, matrix)
+           
