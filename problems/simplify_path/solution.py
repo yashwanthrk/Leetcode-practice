@@ -1,5 +1,10 @@
-class Solution:
-    def simplifyPath(self, path: str) -> str:
+class Solution(object):
+    def simplifyPath(self, path):
+        """
+        :type path: str
+        :rtype: str
+        """
+
         components = path.split("/")
         stack = []
 
@@ -10,8 +15,13 @@ class Solution:
             elif component and component != ".":
                 stack.append(component)
         
-        print(stack)
+        # print(stack)
 
         
+        if not stack:
+            return '/'
 
+            
         return "/" + "/".join(stack)
+
+        
