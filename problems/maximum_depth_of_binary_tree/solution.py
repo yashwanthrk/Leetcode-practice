@@ -1,16 +1,33 @@
 # Definition for a binary tree node.
-# class TreeNode:
+# class TreeNode(object):
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
 
-        if not root:
-            return 0
-        if not root.left and not root.right:
-            return 1
-        left_height = 1 + self.maxDepth(root.left)
-        right_height = 1 + self.maxDepth(root.right)
-        return max(left_height , right_height)
+        
+
+        def go_deep(node, depth):
+            
+            if not node:
+                return depth
+
+             # Increment the depth for the current level
+            depth += 1
+            
+            # Recursively go deeper into the left and right subtrees
+            left_depth = go_deep(node.left, depth)
+            right_depth = go_deep(node.right, depth)
+
+            # Return the maximum depth between the left and right subtrees
+            return max(left_depth, right_depth)
+
+        
+        return go_deep(root, 0)
+        
