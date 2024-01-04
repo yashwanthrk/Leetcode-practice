@@ -1,37 +1,49 @@
 # Definition for singly-linked list.
-# class ListNode:
+# class ListNode(object):
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-
-
-        # find lenth of list
-        curr = head
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
         
-        list_size = 0
-        while curr is not None:
-            curr = curr.next
-            list_size += 1
+        dummy = head
 
-        if n == list_size:
-            return head.next
+        left_head = ListNode(0, next = head)        
+        root = left_head
 
+        len_list = 0
+        while dummy:
+            len_list += 1
+            dummy = dummy.next
 
-        curr =  head
-        # Iterate through the list until one node before the node to be removed
-        for index in range(1, list_size - n):
-             # Start from 1 because we are already at the head
-            curr = curr.next
-          
         
-        curr.next = curr.next.next
-        # Returning head ensures that the caller has a reference to the beginning of the modified list.
-        return head
+        for left in range(len_list):
+            
+            if left == len_list - n:
+                if left_head.next and left_head.next.next:
+                    left_head.next = left_head.next.next
+                else:
+                    left_head.next = None
+                break
+            else:
+                left_head = left_head.next
+        
 
-        # In summary, always return head (or head.next if removing the head node) because you want to return the start of the modified list, not a pointer from somewhere in the middle.
+        return root.next
+
+
+     
+        
+        # return root.next
 
 
 
 
+
+
+        
