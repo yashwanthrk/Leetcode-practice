@@ -24,6 +24,21 @@ class Solution(object):
         return result
 
 
+        # dict_num = {}
+        # ans = []
+        # for v in nums:
+        #     if v in dict_num:
+        #         dict_num[v] += 1
+        #     else:
+        #         dict_num[v] = 0
+        #     freq = dict_num[v]
+        #     if freq >= len(ans):
+        #         ans.append([])
+        #     ans[freq].append(v)
+        # return ans  
+
+
+
 
 
 
