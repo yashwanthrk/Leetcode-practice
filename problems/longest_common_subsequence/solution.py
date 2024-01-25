@@ -1,28 +1,19 @@
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-
-        row_len = len(text1)
-        col_len = len(text2)
-
-        dp = [ [0] * (col_len + 1) for _ in range(row_len +1)]
         
-        # https://www.youtube.com/watch?v=jHGgXV27qtk&ab_channel=Jenny%27sLecturesCSIT
-        
-        # Following steps build L[m+1][n+1] in bottom up fashion
-        # Note: L[i][j] contains length of LCS of X[0..i-1]
-        # and Y[0..j-1]
 
-        for row in range(1, row_len + 1):
-            for col in range(1, col_len + 1):
-                if (text1[row - 1] == text2[col - 1]):
-                    dp[row][col] = 1 + dp[row-1][col-1]
+        N = len(text1)
+        M = len(text2)
+
+        dp = [[0 for _ in range(M + 1)] for _ in range(N + 1)]
+
+        output = 0
+        for i in range(1, N + 1):
+            for j in range(1, M + 1):
+                if text1[i - 1] == text2[j - 1]:
+                    dp[i][j] = 1 + dp[i-1][j-1]
                 else:
-                    
-                    dp[row][col] = max(dp[row-1][col], dp[row][col-1])
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+
         return dp[-1][-1]
-
-      
-
-    
-
 
