@@ -1,37 +1,25 @@
-class Solution(object):
-    def evalRPN(self, tokens):
-        """
-        :type tokens: List[str]
-        :rtype: int
-        """
-
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
 
         stack = []
 
-        operators = ["+", "-", "*", "/"]
-
         for token in tokens:
             
-            if token in operators and len(stack) > 1:
+            if token in ['+', '-', '*', '/']:
                 
-                second_num = stack.pop()
-                first_num = stack.pop()
+                second_token = stack.pop()
+                first_token = stack.pop()
 
-                result = 0
-                
-                if token == "+":
-                    result = first_num + second_num
+                if token == '+':
+                    stack.append(first_token + second_token)
                 elif token == '-':
-                    result = first_num - second_num
-                elif token == "*":
-                    result = first_num * second_num
-                else:
-                    result = int(float(first_num) / second_num)
-                
-                stack.append(result)
-
+                    stack.append(first_token - second_token)
+                elif token == '*':
+                    stack.append(first_token * second_token)
+                elif token == '/':
+                    # For division, convert to int for floor division in Python
+                    stack.append(int(first_token / second_token)) 
             else:
                 stack.append(int(token))
-        
 
-        return stack.pop()
+        return stack[-1]
