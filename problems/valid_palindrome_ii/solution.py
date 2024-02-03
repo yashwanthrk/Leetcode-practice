@@ -1,15 +1,22 @@
 class Solution:
     def validPalindrome(self, s: str) -> bool:
 
-        def isPalindrome(sub: str) -> bool:
-            return sub == sub[::-1]
-        
-        p1, p2 = 0, len(s) - 1
-        
-        while p1 < p2:
-            if s[p1] != s[p2]:
-                return isPalindrome(s[p1+1:p2+1]) or isPalindrome(s[p1:p2])
-            p1 += 1
-            p2 -= 1
-            
+        low = 0 
+        high = len(s) -1
+
+        while low < high:
+            if s[low] != s[high]:
+                return self.isPalindrome(s, low+1, high) or self.isPalindrome(s, low, high-1)
+            low += 1
+            high -= 1
         return True
+
+    def isPalindrome(self, s: str, low: int, high: int) -> bool:
+        while low < high: 
+            if s[low] != s[high]:
+                return False
+            low += 1
+            high -= 1
+        return True 
+
+    
