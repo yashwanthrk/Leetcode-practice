@@ -1,18 +1,17 @@
-
-
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        freq_map = {}
-        common_list = []
-
-        # Populate the frequency map with elements from nums1
+        counts = {}
+        result = []
+        
         for num in nums1:
-            freq_map[num] = freq_map.get(num, 0) + 1
-
-        # Iterate through nums2 and find common elements
+            if num in counts:
+                counts[num] += 1
+            else:
+                counts[num] = 1
+        
         for num in nums2:
-            if num in freq_map and freq_map[num] > 0:
-                common_list.append(num)
-                freq_map[num] -= 1
-
-        return common_list
+            if num in counts and counts[num] > 0:
+                result.append(num)
+                counts[num] -= 1
+        
+        return result
