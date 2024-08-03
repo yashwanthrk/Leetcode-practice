@@ -1,22 +1,24 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         
+        if len(s) < 2:
+            return False
+
+        parentheses_dict = {
+            '}': '{',
+            ']' : '[',
+            ')' : '('
+        }
+
         stack = []
 
-        parenthesis_dict = { ')' : '(' ,  "}" :  "{" ,    "]" : "[" }
-
         for ch in s:
-            if ch not in parenthesis_dict:
-                stack.append(ch)
-                
-            elif stack and stack[-1] == parenthesis_dict[ch]:
-                stack.pop()
-            
+            if ch in parentheses_dict:
+                if stack and stack[-1] == parentheses_dict[ch]:
+                    stack.pop()
+                else:
+                    return False
             else:
                 stack.append(ch)
-
-            
-
-        return len(stack) == 0
-
-
+        
+        return not stack
