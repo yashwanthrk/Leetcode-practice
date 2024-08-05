@@ -1,28 +1,21 @@
 # Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution(object):
-    def hasCycle(self, head):
-        """
-        :type head: ListNode
-        :rtype: bool
-        """
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
 
-        
-        curr = head
-        linked_list_set = set()
+        visited_nodes = set()
+        current_node = head
 
-        while curr:
-            if curr.next in linked_list_set:
-                return True
-            linked_list_set.add(curr)
-            curr = curr.next
-        
+        while current_node:
+            
+            if current_node in visited_nodes:
+                return True  
+
+            visited_nodes.add(current_node)
+            current_node = current_node.next
+
         return False
-
-
-
-        
