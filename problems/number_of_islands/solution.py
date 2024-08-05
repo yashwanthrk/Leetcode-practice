@@ -1,24 +1,36 @@
 class Solution:
-    def numIslands(self, grid):
-        if not grid:
-            return 0
-            
-        count = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j] == '1':
-                    self.dfs(grid, i, j)
-                    count += 1
-        return count
+    def numIslands(self, grid: List[List[str]]) -> int:
+        
+        visited = set()
 
-    def dfs(self, grid, i, j):
-        if i<0 or j<0 or i>=len(grid) or j>=len(grid[0]) or grid[i][j] != '1':
-            return
+        islands = 0    
+        rows = len(grid)
+        cols = len(grid[0])
+
+        def dfs(r, c):
+            # Check bounds and if the cell is water or visited
+            if (r < 0 or r >= rows or
+            c < 0 or c >= cols or
+            grid[r][c] == '0' or
+            (r, c) in visited):
+                return
+
+            # Mark the cell as visited
+            visited.add((r, c))
+            # Visit all adjacent cells (up, down, left, right)
+            dfs(r + 1, c)
+            dfs(r - 1, c)
+            dfs(r, c + 1)
+            dfs(r, c - 1)
+
         
-        # rather to make it visited; using different symbol
-        grid[i][j] = '#'
-        
-        self.dfs(grid, i+1, j)
-        self.dfs(grid, i-1, j)
-        self.dfs(grid, i, j+1)
-        self.dfs(grid, i, j-1)
+        rows = len(grid)
+        cols = len(grid[0])
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == '1' and (r, c) not in visited:
+                    islands += 1
+                    dfs(r, c)
+
+        return islands
