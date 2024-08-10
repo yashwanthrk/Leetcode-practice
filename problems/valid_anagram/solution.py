@@ -3,25 +3,16 @@ class Solution:
         
         if len(s) != len(t):
             return False
-
-        str_dict = {}
+ 
+        count_dict = {}
         
-        for ch in s:
-            str_dict[ch] = str_dict.get(ch, 0) + 1
+        for ch1, ch2 in zip(s, t):
+            count_dict[ch1] = count_dict.get(ch1, 0) + 1
+            count_dict[ch2] = count_dict.get(ch2, 0) - 1
 
-        for ch in t:
-            if ch in str_dict and str_dict[ch] > 0:
-                str_dict[ch] -= 1
-            else:
+        
+        for ch, count in count_dict.items():
+            if count != 0:
                 return False
 
-        return sum(str_dict.values()) == 0
-
-
-        # for x in s:
-        #     if not x in t:
-        #         return False
-        #     t = t.replace(x, "", 1)
-        # if len(t) == 0:
-        #     return True
-        # return False
+        return True
