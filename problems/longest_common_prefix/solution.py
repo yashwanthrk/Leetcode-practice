@@ -1,14 +1,19 @@
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
 
-        result = ""
-        
-        for index in range(len(strs[0])):
-            for word in strs:
-                if index == len(word) or strs[0][index] != word[index]:
-                    return result
+        if not strs:
+            return ""
 
-            result += strs[0][index]
+        strs.sort()
 
+        # Compare characters between the first and last string
+        first, last = strs[0], strs[-1]
+        result = []
 
-        return result 
+        for f, l in zip(first, last):
+            if f == l:
+                result.append(f)
+            else:
+                break
+
+        return "".join(result)
