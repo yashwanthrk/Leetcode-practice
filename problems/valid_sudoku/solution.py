@@ -1,24 +1,29 @@
-from collections import defaultdict
-
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-         # defaultdicts to store digits encountered in each row, column, and 3x3 square
-        rows = defaultdict(set)
-        cols = defaultdict(set)
-        squares = defaultdict(set)
+        rows = [set() for _ in range(9)]
+        columns = [set() for _ in range(9)]
+        boxes = [set() for _ in range(9)]
+        
+        for i in range(9):
+            for j in range(9):
+                num = board[i][j]
+                
+                if num != '.':
+                    
+                    if num in rows[i]:
+                        return False
 
-        for r in range(9):
-            for c in range(9):
-                if board[r][c] == ".":
-                    continue
+                    if num in columns[j]:
+                        return False
+                    
+                    # Calculate the index for the 3x3 box
+                    box_index = (i // 3) * 3 + j // 3
 
-                # Check for repeated digits in the current row, column, or square
-                if board[r][c] in rows[r] or board[r][c] in cols[c] or board[r][c] in squares[(r // 3, c // 3)]:
-                    return False
-
-                # Add the digit to the sets associated with the current row, column, and square
-                rows[r].add(board[r][c])
-                cols[c].add(board[r][c])
-                squares[(r // 3, c // 3)].add(board[r][c])
-
+                    if num in boxes[box_index]:
+                        return False
+                    
+                    rows[i].add(num)
+                    columns[j].add(num)
+                    boxes[box_index].add(num)
+        
         return True
