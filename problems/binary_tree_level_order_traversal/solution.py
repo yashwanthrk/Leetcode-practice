@@ -4,33 +4,31 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-from collections import deque
-
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-
-        if not root:
-            return None
-
-        output = []
-        q = deque([root])
-
-
-        while q:
-            level = []
-            q_size = len(q)
-            for index in range(q_size):
-                node = q.popleft()
-                level.append(node.val)
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            
-            if level:
-                output.append(level)
-
-        return output
-
         
+        if not root:
+            return []
+        
+        from collections import deque
+        queue = deque([root])
+        
+        result = []
+        
+        while queue:
+            
+            level_items = []
+            
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                level_items.append(node.val)
+
+                if node.left:
+                    queue.append(node.left)
+                
+                if node.right:
+                    queue.append(node.right)
+                    
+            result.append(level_items)
+
+        return result
