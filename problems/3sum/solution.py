@@ -1,47 +1,51 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
+        
+        nums.sort()  
+        triplets = []
+        
+        for i in range(len(nums) - 2):
 
-        triplets_list = []
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue  # Skip duplicate elements
 
+            left, right = i + 1, len(nums) - 1
 
-        for left in range(len(nums) - 2):
-
-             # this step makes sure that we do not have any duplicates in our 
-            #  result output
-            if left > 0 and nums[left] == nums[left - 1]:
-                continue
-
-            mid = left + 1
-            right = len(nums) - 1
-            while mid < right:
-                total = nums[left] + nums[mid] + nums[right]
-
-
-                if total > 0:
+            while left < right:
+                total = nums[i] + nums[left] + nums[right]
+                if total == 0:
+                    triplets.append([nums[i], nums[left], nums[right]])
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1  # Skip duplicates
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1  # Skip duplicates
+                    left += 1
                     right -= 1
 
                 elif total < 0:
-                    mid += 1
-
+                    left += 1 
 
                 else:
-                    triplets_list.append([nums[left], nums[mid], nums[right]])
+                    right -= 1  
+
+        return triplets
 
 
-                    # Another conditional for not calculating duplicates
+        # h_index = {}
+        # triplets = set()
 
-                    
-                    while mid < right and nums[mid] == nums[mid + 1]:
-                        mid += 1
+        # for i, num in enumerate(nums):
+        #     h_index[num] = i
 
+        # for i in range(len(nums)):
+        #     for j in range(i+1, len(nums)):
 
-                    while mid < right and nums[right] == nums[right - 1]:
-                        right -= 1
+        #         # logic is nums[i] + nums[j] + desired_num = 0
+        #         # make it ulta => desired_num = -nums[i] - nums[j]
+        #         desired_num = - nums[i] - nums[j]
+        #         if desired_num in h_index and h_index[desired_num] != i and  h_index[desired_num] != j:
+        #             triplets.add(tuple(sorted([nums[i], nums[j], desired_num])))
 
-                    mid += 1
-                    right -= 1
+        # return list(triplets)
 
-        return triplets_list
-                        
-
+        
