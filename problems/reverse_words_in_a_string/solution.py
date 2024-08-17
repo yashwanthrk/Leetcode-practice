@@ -1,16 +1,18 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
+       
+     # reverse the word, not the character    
 
-        # words = s.strip().split() 
-        # return ' '.join(reversed(words))
+       # string to array
+       # trims whitesapces also  
+        s = s.split()
 
-        # Note - just reverse the order of words, not characters
-
-        s = s.split()  # This will automatically handle extra spaces
-        result = ""
-        for i in range(len(s) - 1, -1, -1):
-            if i != 0:
-                result = result + s[i] + " "
+        new_s = ""
+        for index in range(len(s) - 1, -1, -1):
+            print(s[index])
+            if index != 0:
+                new_s += s[index] + " "
             else:
-                result = result + s[i]   
-        return result
+                new_s += s[index]
+
+        return new_s
