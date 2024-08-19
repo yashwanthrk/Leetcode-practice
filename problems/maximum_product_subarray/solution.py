@@ -1,23 +1,19 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         
-        if len(nums) == 0:
-            return 0
-
-        max_so_far = nums[0]
-        min_so_far = nums[0]
-        result = max_so_far
-
+        
+        max_product = min_product = result = nums[0]
+        
         for i in range(1, len(nums)):
-            curr = nums[i]
-            temp_max = max(curr, max_so_far * curr, min_so_far * curr)
-            min_so_far = min(curr, max_so_far * curr, min_so_far * curr)
-
-            max_so_far = temp_max
-
-            result = max(max_so_far, result)
-
+            num = nums[i]
+            
+            # Calculate the potential max and min products at the current position
+            if num < 0:
+                max_product, min_product = min_product, max_product
+            
+            max_product = max(num, max_product * num)
+            min_product = min(num, min_product * num)
+            
+            result = max(result, max_product)
+        
         return result
-
-
-       
