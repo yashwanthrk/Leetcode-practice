@@ -1,42 +1,31 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         
-        def dfs(x, y, index):
-
-            # If all characters matched
-            if index == len(word):  
-                return True    
-
-            # Check if the current position is out of bounds
-            if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]):
-                return False
-            
-          
-
-            # Check if the current cell does not match the current character in the word
-            if board[x][y] != word[index]:
-                return False
-            
-          
-            
-            # Mark the cell as visited
-            temp = board[x][y]
-            board[x][y] = '#'
-            
-            if (dfs(x + 1, y, index + 1) or
-                dfs(x - 1, y, index + 1) or
-                dfs(x, y + 1, index + 1) or
-                dfs(x, y - 1, index + 1)):
+        rows, cols = len(board), len(board[0])
+        
+        def backtrack(r, c, index):
+            if index == len(word):
                 return True
             
-            # Restore the original value
-            board[x][y] = temp
-            return False
+            if (r < 0 or r >= rows or c < 0 or c >= cols or
+                board[r][c] != word[index]):
+                return False
+            
+            temp = board[r][c]
+            board[r][c] = '#'
+            
+            found = (backtrack(r + 1, c, index + 1) or 
+                     backtrack(r - 1, c, index + 1) or 
+                     backtrack(r, c + 1, index + 1) or 
+                     backtrack(r, c - 1, index + 1))
+            
+            board[r][c] = temp
+            
+            return found
         
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                if board[i][j] == word[0]:  # Start DFS if the first letter matches
-                    if dfs(i, j, 0):  
-                        return True
+        for r in range(rows):
+            for c in range(cols):
+                if backtrack(r, c, 0):
+                    return True
         
         return False
