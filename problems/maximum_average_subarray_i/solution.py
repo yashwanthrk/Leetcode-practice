@@ -1,28 +1,12 @@
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
-    
-        max_window = sum(nums[:k])
-        max_window_avg = max_window / k
-        for i in range(1, len(nums) - k  + 1):
-            curr_window = max_window - nums[i - 1] + nums[i + k - 1]
-            max_window = curr_window
-            max_window_avg = max(max_window_avg, curr_window / k)
+        max_window_sum = sum(nums[:k])
+        current_window_sum = max_window_sum
         
-        return max_window_avg
-
-
-
-        # n = len(nums)
-        # curr = 0
+        for i in range(k, len(nums)):
+            # Slide the window to the right
+            current_window_sum += nums[i] - nums[i - k]
+            max_window_sum = max(max_window_sum, current_window_sum)
         
-        # for i in range(k):
-        #     curr += nums[i]
-        
-        # ans = curr
-        
-        # for i in range(k, n):
-        #     curr += (nums[i] - nums[i-k])
-        #     if ans < curr:
-        #         ans = curr
-        
-        # return (ans/k)
+        # Return the maximum average
+        return max_window_sum / k
