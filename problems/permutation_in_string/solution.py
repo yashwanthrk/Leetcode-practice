@@ -1,37 +1,28 @@
-class Solution: 
+class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-
-        # string_list = []
-        # def permute(s, result = ''):
-        #     if (len(s) == 0):
-        #         string_list.append(result)
-        #         return
-     
-        #     for i in range(len(s)):
-        #         ch = s[i]
-        #         left_substr = s[0:i]
-        #         right_substr = s[i + 1:]
-        #         remaining = left_substr + right_substr
-        #         permute(remaining, result + ch)
-
-        # permute(s1)
-
-
-
-
-        s1_dict = collections.Counter(s1)
-        s1_length = len(s1)
-    
-        s2_dict = collections.Counter(s2[:s1_length])
         
+        from collections import Counter
+
+        s1_len = len(s1)
+        s2_len = len(s2)
+
+        if s1_len > s2_len:
+            return False
+        
+        s1_dict = Counter(s1)
+        s2_dict = Counter(s2[:s1_len])
+
         if s1_dict == s2_dict:
             return True
-        
-        for i in range(len(s2) - s1_length):
+
+
+        for i in range(s2_len - s1_len):
             s2_dict[s2[i]] -= 1
-            s2_dict[s2[i + s1_length]] += 1   
-                
+            s2_dict[s2[i + s1_len]] += 1
+
             if s1_dict == s2_dict:
-                # print(s1_dict, s2_dict)
                 return True
+
         return False
+
+      
