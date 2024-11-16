@@ -1,36 +1,45 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         
-        visited = set()
+        visited_island = set()
 
-        islands = 0    
-        rows = len(grid)
-        cols = len(grid[0])
+        def check_for_neighbouring_lands(x, y):
 
-        def dfs(r, c):
-            # Check bounds and if the cell is water or visited
-            if (r < 0 or r >= rows or
-            c < 0 or c >= cols or
-            grid[r][c] == '0' or
-            (r, c) in visited):
-                return
+            # will see if the lands we are checking comes under the boundary / grid
+            if x < 0 or x >= m or y < 0 or y >= n:
+                return 0
 
-            # Mark the cell as visited
-            visited.add((r, c))
-            # Visit all adjacent cells (up, down, left, right)
-            dfs(r + 1, c)
-            dfs(r - 1, c)
-            dfs(r, c + 1)
-            dfs(r, c - 1)
+            if (x, y) in visited_island:
+                return 0
+
+            if grid[x][y] == "0":
+                return 0
+
+            visited_island.add((x, y))
+
+            # When you recurse into the neighboring cells, you do the same thing for each new land cell. You never reset area back to 1 because in the current scope of each recursive call, you're always adding the value returned by each subsequent recursive call.
+            area = 1
+
+            area += check_for_neighbouring_lands(x + 1, y)
+            area += check_for_neighbouring_lands(x - 1, y)
+            area += check_for_neighbouring_lands(x, y + 1)
+            area += check_for_neighbouring_lands(x, y - 1)
+
+            return area
 
         
-        rows = len(grid)
-        cols = len(grid[0])
+        num_of_islands = 0
 
-        for r in range(rows):
-            for c in range(cols):
-                if grid[r][c] == '1' and (r, c) not in visited:
-                    islands += 1
-                    dfs(r, c)
+        m = len(grid)
+        n = len(grid[0])
+        
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == "1" and (x, y) not in visited_island:
+                    num_of_islands += 1
+                    check_for_neighbouring_lands(x, y)
 
-        return islands
+        return num_of_islands
+
+
+        # Time
