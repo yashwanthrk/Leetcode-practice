@@ -1,106 +1,69 @@
-
-from collections import deque, defaultdict
-
-
-
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
         
+
+        #  dfs with recursion
         if source == destination:
             return True
 
-        graph_dict = defaultdict(list)
-        for i, j in edges:
-            graph_dict[i].append(j)
-            graph_dict[j].append(i)
+        adj_list = collections.defaultdict(list)
 
-        
-        # graph_dict = {}
-        # for edge in edges:
-        #     if edge[0] in graph_dict:
-        #         graph_dict[edge[0]].add(edge[1])
-        #     else:
-        #         graph_dict[edge[0]] = {edge[1]}
+        for u, v in edges:
+            adj_list[u].append(v)
+            adj_list[v].append(u)
 
-        #     if edge[1] in graph_dict:
-        #         graph_dict[edge[1]].add(edge[0])
-        #     else:
-        #         graph_dict[edge[1]] = {edge[0]}
+        seen = set()
+        seen.add(source)
 
+        # def dfs(i):
+        #     if i == destination:
+        #         return True
 
-        # if not source in graph_dict:
+        #     for node in adj_list[i]:
+        #         if node not in seen:
+        #             seen.add(node)
+        #             # soon the valid point is found
+        #             if dfs(node):
+        #                 return True
+            
         #     return False
 
-    #     visited = set()
-    #     queue = deque([source])
+        # return dfs(source)
 
-    #     while queue:
-    #         vertex = queue.popleft()
-    # #         print(vertex)
-            
-    #         if vertex not in visited:
-    #             print(visited)
-    # #             print(vertex)  # or do something else with the vertex
-    #             visited.add(vertex)
-                
-    #             #  graph[vertex] - visited performs a set difference operation. 
-    # #             It subtracts the visited set from the set of adjacent vertices.        
-    #             queue.extend(graph_dict[vertex] - visited)
-    #             # print(queue)
 
-    #     if source in visited and destination in visited:
-    #         return True
+
+        # Iterative DFS:
+
+            # For large graphs, recursion depth could exceed Python's limit. Consider using an iterative approach with a stack to avoid stack overflow issues.
+            # Pseudo Code for Iterative DFS:
+
+            # text
+            # Copy code
+            # - Initialize a stack with the `source` node.
+            # - While the stack is not empty:
+            #     - Pop the top node.
+            #     - If the node is the destination, return True.
+            #     - For each neighbor of the node:
+            #         - If it’s not in the seen set:
+            #             - Add it to the stack and mark it as visited.
+            # - Return False if no path is found.
+
         
-    #     return False
+        stack = [source]
 
+        while stack:
+            node = stack.pop()
 
-        visited = set()
-        queue = deque([source])
-        visited.add(source)
-
-        while queue:
-            vertex = queue.popleft()
-
-            if vertex == destination:
+            if node == destination:
                 return True
 
+            for neighbour_node in adj_list[node]:
+                if neighbour_node not in seen:
+                    seen.add(neighbour_node)
+                    stack.append(neighbour_node)
 
 
-            for neighbor_node in graph_dict[vertex]:
-                if neighbor_node not in visited:
-                    visited.add(neighbor_node)
-                    queue.append(neighbor_node)
-
-        # return source in visited and destination in visited
         return False
 
 
-
-        # if source == destination:
-        #     return True
-
-        # graph = defaultdict(list)
-        # for i, j in edges:
-        #     graph[i].append(j)
-        #     graph[j].append(i)
-
-        # queue = deque()
-        # visited = set()
-
-        # queue.append(source)
-        # visited.add(source)
-
-        # while queue:
-        #     node = queue.popleft()
-        #     if node == destination:
-        #         return True
-
-        #     for neighbor_node in graph[node]:
-        #         if neighbor_node not in visited:
-        #             queue.append(neighbor_node)
-        #             visited.add(neighbor_node)
     
-        # return False
-
-
-            
