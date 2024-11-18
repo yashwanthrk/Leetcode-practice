@@ -1,25 +1,24 @@
 class Solution:
-
-
-    def fill(self, image, sr, sc, color, cur):
-            
-        if sr < 0 or sr >= len(image) or sc < 0 or sc >= len(image[0]):
-            return
-        
-        if cur != image[sr][sc]: 
-            return
-        
-        image[sr][sc] = color
-        # Make four recursive calls to the function with (sr-1, sc), 
-        # (sr+1, sc), (sr, sc-1) and (sr, sc+1)
-        self.fill(image, sr-1, sc, color, cur)
-        self.fill(image, sr+1, sc, color, cur)
-        self.fill(image, sr, sc-1, color, cur)
-        self.fill(image, sr, sc+1, color, cur)
-
     def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
-        if image[sr][sc] == color: 
+        if image[sr][sc] == color:  # No need to process if color is already set
             return image
-            
-        self.fill(image, sr, sc, color, image[sr][sc])
+
+        ROW, COL = len(image), len(image[0])  # Dimensions of the grid
+        old_color = image[sr][sc]  # Color to be replaced
+
+        def fill_color(x, y):
+            # Check bounds and if the cell matches the old color
+            if x < 0 or x >= ROW or y < 0 or y >= COL or image[x][y] != old_color:
+                return
+
+            # Update the cell's color
+            image[x][y] = color
+
+            # Recursively call fill_color for adjacent cells
+            fill_color(x - 1, y)
+            fill_color(x + 1, y)
+            fill_color(x, y - 1)
+            fill_color(x, y + 1)
+
+        fill_color(sr, sc)  # Start the flood fill from the starting cell
         return image
