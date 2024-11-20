@@ -7,22 +7,27 @@
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         
-        self.max_diameter = 0
+        
+        largest_diameter = [0]
 
-        def dfs(node: Optional[TreeNode]) -> int:
+        def height(node):
             
             if not node:
                 return 0
 
 
-            left_depth = dfs(node.left)
-            right_depth = dfs(node.right)
+            left_height = height(node.left)
+            right_height = height(node.right)
 
-            # print(left_depth, right_depth)
-            self.max_diameter = max(self.max_diameter, left_depth + right_depth)
 
-            # Return the depth of the current node
-            return max(left_depth, right_depth) + 1
+            diameter = left_height + right_height
 
-        dfs(root)
-        return self.max_diameter
+            largest_diameter[0] = max(largest_diameter[0], diameter)
+
+            #  lets call recursively height on the root
+            return 1 + max(left_height, right_height)
+
+
+        height(root)
+
+        return largest_diameter[0]
