@@ -7,24 +7,28 @@
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         
-        # This will store the current count of nodes visited
-        self.count = 0
-        self.result = None
-        
-        def dfs(node):
-            
-            if not node or self.result is not None:
+        new_k = [k]
+        result = [None]  # To store the kth smallest element
+#         In-Order Traversal:
+# Visits nodes in ascending order in a Binary Search Tree.
+# Counter Decrement:
+# count keeps track of how many nodes have been visited. When count == 0, the current node is the kth smallest.
+# Early Exit:
+# Stops further recursion once the result is found.
+        def depth(node):
+            if not node:
                 return
             
-            dfs(node.left)
+            depth(node.left)
             
-            self.count += 1
-            if self.count == k:
-                self.result = node.val
+            # Decrement k and check if the current node is the kth element
+            new_k[0] -= 1
+            if new_k[0] == 0:
+                result[0] = node.val
                 return
             
-            dfs(node.right)
-        
-        dfs(root)
-        
-        return self.result
+            depth(node.right)
+
+        # Start the in-order traversal
+        depth(root)
+        return result[0]
