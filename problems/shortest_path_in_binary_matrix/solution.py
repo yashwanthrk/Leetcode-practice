@@ -1,39 +1,57 @@
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
         
-
-        from collections import deque
-
-        if grid[0][0] == 1 or grid[-1][-1] == 1:
+        if not grid:
             return -1
 
+        if grid[0][0] == 1:
+            return -1
 
-        directions = [(0,1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
-        queue = deque([(0, 0, 1)])
-        visited = set([(0, 0)])
-
-        while queue:
-
-            x, y, path_len = queue.popleft()
-
-            if (x, y) == (len(grid) - 1, len(grid[0]) - 1):
-                return path_len
-
-            
-            for dx, dy in directions:
-                new_x, new_y = x + dx, y + dy
-
-                if  0 <= new_x < len(grid) and 0 <= new_y < len(grid[0]):
-                    if (new_x, new_y) not in visited and grid[new_x][new_y] != 1:
-                        queue.append((new_x, new_y, path_len + 1))
-                        visited.add((new_x, new_y))
-
+        from collections import deque
         
-        return -1
+        rows, cols = len(grid), len(grid[0])
 
 
-#         Time Complexity: O(n²) (where n is the grid dimension), as each cell is visited at most once.
-# Space Complexity: O(n²) for the queue and visited set
+
+        def bfs(grid, start):
+
+          # Start is a tuple (x, y)   
+            queue = deque([start]) 
+            visited = set()
+            visited.add(start)
+            
+            # Define directions: (row_change, col_change)
+            directions = [
+        (0, 1),   # Right
+        (1, 0),   # Down
+        (0, -1),  # Left
+        (-1, 0),  # Up
+        (-1, -1), # Top-left diagonal
+        (-1, 1),  # Top-right diagonal
+        (1, -1),  # Bottom-left diagonal
+        (1, 1)    # Bottom-right diagonal
+    ]
+
+            while queue:
+                x, y, dist = queue.popleft()
+
+                if x == rows - 1 and y == cols - 1:
+                    return dist
 
 
+
+                # Process the current cell
+                print(f"Visiting: {x}, {y}")
+
+                for dr, dc in directions:
+                    nx, ny = x + dr, y + dc  # Compute neighbor's coordinates
+
+                    # Check if neighbor is within bounds and not visited
+                    if 0 <= nx < rows and 0 <= ny < cols and (nx, ny) not in visited and grid[nx][ny] == 0:
+                        queue.append((nx, ny, dist + 1))
+                        visited.add((nx, ny))
+
+            return -1
+
+        return bfs(grid, (0, 0, 1))
 
