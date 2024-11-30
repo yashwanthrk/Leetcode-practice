@@ -1,17 +1,35 @@
-from typing import List
-
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
-        # Step 1: Initialize delay times
-        delay_time = [float('inf')] * (n + 1)
-        delay_time[k] = 0  # Start node delay is 0
-        
-        # Step 2: Relax edges up to n-1 times
-        for _ in range(n - 1):
-            for src, dst, time in times:
-                if delay_time[src] + time < delay_time[dst]:
-                    delay_time[dst] = delay_time[src] + time
-        
-        # Step 3: Calculate the maximum delay
-        max_delay = max(delay_time[1:])  # Ignore index 0
-        return max_delay if max_delay < float('inf') else -1
+
+        from collections import defaultdict
+        from heapq import heappop, heappush
+
+        # Build the graph as an adjacency list
+        graph = defaultdict(list)
+        for u, v, w in times:
+            graph[u].append((v, w))
+
+        # Min-heap to process nodes by shortest time
+        heap = [(0, k)]  # (time_to_reach, node)
+        visited = {}
+
+        while heap:
+            t, u = heappop(heap)
+            # If the node is already visited, skip
+            if u in visited:
+                continue
+
+            # Mark the node as visited with its shortest time
+            visited[u] = t
+
+            # If all nodes are visited, we can stop early
+            if len(visited) == n:
+                break
+
+            # Push neighbors into the heap
+            for v, w in graph[u]:
+                if v not in visited:
+                    heappush(heap, (t + w, v))
+
+        # Check if all nodes are reachable
+        return max(visited.values()) if len(visited) == n else -1
