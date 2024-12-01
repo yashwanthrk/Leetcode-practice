@@ -7,46 +7,25 @@
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         
+ # Handle the edge case where the tree is empty
         if not root:
             return []
 
-        # bfs ==> queue
+        queue = deque([root])  # Initialize the queue with the root node
+        levels = []  # To store the result
 
-        from collections import deque
-
-        queue = deque([root])
-
-        levels = []
-        
         while queue:
             curr_level = []
+            size = len(queue)  # Number of nodes at the current level
 
-            size = len(queue)
-
-            for i in range(size):
+            for i in range(size):  # Process all nodes at the current level
                 node = queue.popleft()
-                curr_level.append(node.val)
+                curr_level.append(node.val)  # Add the node's value to the current level
                 if node.left:
-                    queue.append(node.left)
+                    queue.append(node.left)  # Add left child to the queue
                 if node.right:
-                    queue.append(node.right)
+                    queue.append(node.right)  # Add right child to the queue
 
+            levels.append(curr_level)  # Append the current level to the result
 
-            levels.append(curr_level)
-
-        return levels         
-
-
-        # while queue is not empty:
-        #     initialize curr_level as an empty list
-        #     determine size of current level as len(queue)
-
-        #     for i in range(size of current level):
-        #         pop a node from queue
-        #         add node value to curr_level
-        #         if left child exists, append to queue
-        #         if right child exists, append to queue
-
-        #     append curr_level to levels
-
-        # return levels   
+        return levels
