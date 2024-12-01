@@ -7,27 +7,22 @@
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         
-        if root is None:
+
+        if not root:
             return False
+        
 
-        def dfs(node, remaining_sum):
+        def has_sum(node, curr_sum):
+            
 
-            if node is None:
+            if not node:
                 return False
 
-            # Subtract the current node's value from the remaining sum
-            remaining_sum -= node.val
-            
-            # Check if it's a leaf node and the remaining sum equals 0
-            if node.left is None and node.right is None:
-                return remaining_sum == 0
+
+            if not node.left and not node.right:
+                return targetSum == curr_sum + node.val
 
             
-            # Recursively check the left and right subtrees
+            return has_sum(node.left, curr_sum + node.val) or has_sum(node.right, node.val + curr_sum)
 
-            return dfs(node.left, remaining_sum) or dfs(node.right, remaining_sum)
-
-        return dfs(root, targetSum)
-
-        
-        
+        return has_sum(root, 0)
