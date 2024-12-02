@@ -1,5 +1,7 @@
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        
+# https://www.youtube.com/watch?v=EaphyqKU4PQ&ab_channel=NeetCode
 
         from collections import defaultdict
         from heapq import heappop, heappush
@@ -10,7 +12,8 @@ class Solution:
             graph[u].append((v, w))
 
         # Min-heap to process nodes by shortest time
-        heap = [(0, k)]  # (time_to_reach, node)
+        # (time_to_reach, node)
+        heap = [(0, k)]  
         visited = {}
 
         while heap:
