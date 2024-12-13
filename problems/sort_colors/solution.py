@@ -3,19 +3,16 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        
-        low, mid, high = 0, 0, len(nums) - 1
-       
-        while mid <= high:
-            if nums[mid] == 0:
-                # print(nums[low], nums[mid], mid)
-                nums[low], nums[mid] = nums[mid], nums[low]
-                low += 1
-                mid += 1
-            elif nums[mid] == 2:
-                nums[mid], nums[high] = nums[high], nums[mid]
-                high -= 1
-            else:  # nums[mid] == 1
-                mid += 1
 
-        return nums
+
+        count = [0, 0, 0] 
+
+        for num in nums:
+            count[num] += 1
+
+        RED, WHITE, BLUE = count
+
+        nums[:RED] = [0] * RED
+        nums[RED: RED + WHITE] = [1] * WHITE
+        nums[RED + WHITE:] = [2] * BLUE
+        
