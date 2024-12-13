@@ -3,36 +3,21 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-
-
-        length = len(nums)
-        k = k % length
         
-        if not k or not nums:
-            return
+        def reverse(start, end):
+            while start < end:
+                nums[start], nums[end] = nums[end], nums[start]
+                start += 1
+                end -= 1
 
-        nums[:] = nums[-k:] + nums[:length-k]
-        
-        
-        # nums[-k:] = reversed(nums[-k:])
-        # print(nums)
-        # nums.reverse()
+        n = len(nums)
+        k %= n  # Handle cases where k > n
 
-        # def reverse(start, end): 
-        #     while start < end: 
-        #         nums[start], nums[end] = nums[end], nums[start]
-        #         start += 1
-        #         end -= 1 
-                
-        # num_len = len(nums)
-        # k = k % num_len # if k > n, no point of total k rotations
-        
-        # reverse(0,num_len-1)
-        # # reverse only till k elements
-        # reverse(0, k - 1)
-        # # now reverse remaining elements after k
-        # reverse(k, num_len - 1) 
+        #  Reverse the entire array
+        reverse(0, n - 1)
 
+        #  Reverse the first k elements
+        reverse(0, k - 1)
 
-
-
+        #  Reverse the remaining n-k elements
+        reverse(k, n - 1)
